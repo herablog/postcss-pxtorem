@@ -96,6 +96,7 @@ Default:
     - If value is function, you can use exclude function to return a true and the file will be ignored.
         - the callback will pass the file path as  a parameter, it should returns a Boolean result.
         - `function (file) { return file.indexOf('exclude') !== -1; }`
+- `useEM` (Boolean) Replace value with EM instead of REM. This would be useful when you want to specify sizes at the parent element.
 
 ### Use with gulp-postcss and autoprefixer
 

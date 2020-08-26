@@ -541,3 +541,15 @@ describe("exclude", function() {
     expect(processed).toBe(basicCSS);
   });
 });
+
+describe("useEM", function() {
+  it("should return value with em instead of rem", function() {
+    var expected = ".rule { font-size: 0.9375em }";
+    var options = {
+      useEM: true
+    };
+    var processed = postcss(pxtorem(options)).process(basicCSS).css;
+
+    expect(processed).toBe(expected);
+  });
+});

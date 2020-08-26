@@ -11,7 +11,8 @@ const defaults = {
   replace: true,
   mediaQuery: false,
   minPixelValue: 0,
-  exclude: null
+  exclude: null,
+  useEM: false
 };
 
 const legacyOptions = {
@@ -47,7 +48,8 @@ module.exports = postcss.plugin("postcss-pxtorem", options => {
     const pxReplace = createPxReplace(
       rootValue,
       opts.unitPrecision,
-      opts.minPixelValue
+      opts.minPixelValue,
+      opts.useEM
     );
 
     css.walkDecls((decl, i) => {
@@ -100,13 +102,13 @@ function convertLegacyOptions(options) {
   });
 }
 
-function createPxReplace(rootValue, unitPrecision, minPixelValue) {
+function createPxReplace(rootValue, unitPrecision, minPixelValue, useEM) {
   return (m, $1) => {
     if (!$1) return m;
     const pixels = parseFloat($1);
     if (pixels < minPixelValue) return m;
     const fixedVal = toFixed(pixels / rootValue, unitPrecision);
-    return fixedVal === 0 ? "0" : fixedVal + "rem";
+    return fixedVal === 0 ? "0" : fixedVal + (useEM ? "em" : "rem");
   };
 }
 
